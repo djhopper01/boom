@@ -1,0 +1,9 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+    
+    <!-- Take Picture button -->
+    <color name="button">#99BF19A6</color>
+    <color name="buttonPressed">#FFBF19A6</color>
+
+</resources>
