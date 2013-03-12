@@ -20,6 +20,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     public CameraPreview(Context context, Camera camera) {
         super(context);
+        this.setId(69);
+        
         mContext = context;
         mCamera = camera;
 
