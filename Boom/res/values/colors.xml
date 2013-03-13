@@ -3,7 +3,15 @@
     <color name="black_overlay">#66000000</color>
     
     <!-- Take Picture button -->
-    <color name="button">#99BF19A6</color>
-    <color name="buttonPressed">#FFBF19A6</color>
+    
+    
+    <color name="white">#CCFFFFFF</color>
+    <color name="gray">#66999999</color><color name="buttonStart">#99b3dced</color><color name="buttonCenter">#9929b8e5</color>
+    <color name="buttonEnd">#99bce0ee</color>
+    <color name="buttonStartPressed">#CCb3dced</color>
+    <color name="buttonCenterPressed">#CC29b8e5</color>
+    <color name="buttonEndPressed">#CCbce0ee</color>
+    <color name="buttonOutline">#66999999</color>
+    <color name="buttonOutlinePressed">#99999999</color>
 
 </resources>

@@ -9,13 +9,19 @@
         android:layout_height="fill_parent"
     />
 
-	<Button
-	    android:id="@+id/take_picture"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="bottom"
-	    android:background="@drawable/button"
-	    android:text="@string/take_picture" 
-	/>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="15dip"
+    >
+		<Button
+		    android:id="@+id/take_picture"
+		    android:layout_width="50dip"
+		    android:layout_height="50dip"
+		    android:layout_centerHorizontal="true"
+		    android:background="@drawable/button"
+		/>
+    </RelativeLayout>
  
 </FrameLayout>
