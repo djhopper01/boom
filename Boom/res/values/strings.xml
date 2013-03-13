@@ -4,5 +4,8 @@
     <string name="app_name">Boom</string>
     <string name="take_picture">Take Picture</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="confirmation_close">Close</string>
+    <string name="confirmation_caption">Write a Caption</string>
+    <string name="confirmation_info">We\'re uploading your picture now.</string>
 
 </resources>

@@ -11,8 +11,10 @@ import com.busted.boom.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.ShutterCallback;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,10 +37,13 @@ public class CameraActivity extends Activity {
     private RelativeLayout mPreviewLayout;
     private Button mButton;
     private LocationReader mLocationReader;
+    private Context mContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mContext = this;
 
 		setContentView(R.layout.activity_camera);
 		
@@ -62,7 +67,7 @@ public class CameraActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     // get an image from the camera
-                    mCamera.takePicture(null, null, mPicture);
+                    mCamera.takePicture(mShutterCallback, null, mPictureCallback);
                 }
             }
         );
@@ -99,7 +104,7 @@ public class CameraActivity extends Activity {
 	    return c; // returns null if camera is unavailable
 	}
 	
-	private PictureCallback mPicture = new PictureCallback() {
+	private PictureCallback mPictureCallback = new PictureCallback() {
 
 	    @Override
 	    public void onPictureTaken(byte[] data, Camera camera) {
@@ -124,6 +129,16 @@ public class CameraActivity extends Activity {
 	        
 	        mCamera.startPreview();
 	    }
+	};
+	
+	private ShutterCallback mShutterCallback = new ShutterCallback() {
+
+		@Override
+		public void onShutter() {
+			ConfirmationDialog dialog = new ConfirmationDialog(mContext);
+			dialog.show();
+		}
+		
 	};
 	
 	/** Create a File for saving an image or video */
