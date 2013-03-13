@@ -13,6 +13,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,6 +34,7 @@ public class CameraActivity extends Activity {
     private CameraPreview mPreview;
     private RelativeLayout mPreviewLayout;
     private Button mButton;
+    private LocationReader mLocationReader;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class CameraActivity extends Activity {
 		setContentView(R.layout.activity_camera);
 		
 		mButton = (Button) findViewById(R.id.take_picture);
+		
+		mLocationReader = new LocationReader(this);
 	}
 	
 	@Override
@@ -63,6 +67,9 @@ public class CameraActivity extends Activity {
             }
         );
         
+        // Listen for location updates
+        mLocationReader.startUpdates();
+        
 		super.onResume();
 	}
 
@@ -74,6 +81,10 @@ public class CameraActivity extends Activity {
 	    	mCamera.release();
 	    	mCamera = null;
 	    }
+	    
+	    // Stop listening for location updates
+	    mLocationReader.stopUpdates();
+	    
 	    super.onPause();
 	}
 	
@@ -108,6 +119,8 @@ public class CameraActivity extends Activity {
 	        } catch (IOException e) {
 	            Log.d(TAG, "Error accessing file: " + e.getMessage());
 	        }
+	        
+	        Log.d(TAG, "Lat: " + mLocationReader.getLocation().getLatitude() + ", Lon: " + mLocationReader.getLocation().getLongitude());
 	        
 	        mCamera.startPreview();
 	    }
