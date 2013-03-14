@@ -7,15 +7,21 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.busted.boom.client.ApiClientService;
+import com.busted.boom.model.Picture;
 import com.busted.boom.util.SystemUiHider;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -126,6 +132,27 @@ public class CameraActivity extends Activity {
 	        }
 	        
 	        Log.d(TAG, "Lat: " + mLocationReader.getLocation().getLatitude() + ", Lon: " + mLocationReader.getLocation().getLongitude());
+	        
+	        // Send the picture to the server
+	        CameraActivity activity = (CameraActivity) mContext;
+	        if ( activity != null ) {
+	        	Intent intent = new Intent(activity, ApiClientService.class);
+	        	
+	        	intent.setData(Uri.parse("http://192.168.1.139:3000/pictures"));
+	        	
+	        	Picture picture = new Picture();
+	        	picture.setLatitude(mLocationReader.getLocation().getLatitude());
+	        	picture.setLongitude(mLocationReader.getLocation().getLongitude());
+	        	Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+	    		String json = gson.toJson(picture);
+	        	
+	    		intent.putExtra(ApiClientService.EXTRA_HTTP_VERB, ApiClientService.POST);
+	        	intent.putExtra(ApiClientService.EXTRA_JSON, json);
+	        	
+	        	Log.d(TAG, "Starting the service");
+	        	
+	        	activity.startService(intent);
+	        }
 	        
 	        mCamera.startPreview();
 	    }
