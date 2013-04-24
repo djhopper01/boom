@@ -1,6 +1,8 @@
 package com.busted.boom;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,10 +18,13 @@ public class MainActivity extends Activity {
 	private WebView mBrowseView;
 	private String mHostname;
 	private String mBrowseUrl;
+	private Context mContext;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mContext = this;
 		
 		mHostname = getResources().getString(R.string.server_url);
 		mBrowseUrl = mHostname + getResources().getString(R.string.browse_uri);
@@ -31,6 +36,8 @@ public class MainActivity extends Activity {
 		
 		mBrowseView = (WebView) findViewById(R.id.browse_web_view);
 		mBrowseView.loadUrl(mBrowseUrl);
+		mBrowseView.getSettings().setLoadWithOverviewMode(true);
+		mBrowseView.getSettings().setUseWideViewPort(true);
 
 	}
 
@@ -68,7 +75,8 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onClick(View arg0) {
-			
+			Intent intent = new Intent(mContext, CameraActivity.class);
+			mContext.startActivity(intent);
 		}
 		
 	};

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.busted.boom.client.ApiClientService;
+import com.busted.boom.client.ImageUploadService;
 import com.busted.boom.model.Picture;
 import com.busted.boom.util.SystemUiHider;
 import com.google.gson.Gson;
@@ -44,6 +45,9 @@ public class CameraActivity extends Activity {
     private Button mButton;
     private LocationReader mLocationReader;
     private Context mContext;
+    
+	private String mHostname;
+	private String mCreateImageUrl;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,9 @@ public class CameraActivity extends Activity {
 		mButton = (Button) findViewById(R.id.take_picture);
 		
 		mLocationReader = new LocationReader(this);
+		
+		mHostname = getResources().getString(R.string.server_url);
+		mCreateImageUrl = mHostname + getResources().getString(R.string.create_image_uri);
 	}
 	
 	@Override
@@ -136,18 +143,13 @@ public class CameraActivity extends Activity {
 	        // Send the picture to the server
 	        CameraActivity activity = (CameraActivity) mContext;
 	        if ( activity != null ) {
-	        	Intent intent = new Intent(activity, ApiClientService.class);
+	        	Intent intent = new Intent(activity, ImageUploadService.class);
 	        	
-	        	intent.setData(Uri.parse("http://192.168.1.139:3000/pictures"));
+	        	String authToken = getResources().getString(R.string.auth_token);
 	        	
-	        	Picture picture = new Picture();
-	        	picture.setLatitude(mLocationReader.getLocation().getLatitude());
-	        	picture.setLongitude(mLocationReader.getLocation().getLongitude());
-	        	Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-	    		String json = gson.toJson(picture);
-	        	
-	    		intent.putExtra(ApiClientService.EXTRA_HTTP_VERB, ApiClientService.POST);
-	        	intent.putExtra(ApiClientService.EXTRA_JSON, json);
+	        	// This is just for testing. We'll need to use the user's auth token here.
+	        	intent.setData(Uri.parse(mCreateImageUrl + "?auth_token=" + authToken));
+	        	intent.putExtra(ImageUploadService.EXTRA_FILEPATH, pictureFile.getAbsolutePath());
 	        	
 	        	Log.d(TAG, "Starting the service");
 	        	

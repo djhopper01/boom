@@ -23,6 +23,9 @@
         <service android:name=".client.ApiClientService">
         </service>
         
+        <service android:name=".client.ImageUploadService">
+        </service>
+        
         <activity
             android:name="com.busted.boom.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

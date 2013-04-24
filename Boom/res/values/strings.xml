@@ -10,7 +10,13 @@
     <string name="confirmation_info">We\'re uploading your picture now.</string>
     <string name="refresh">Refresh</string>
     
-    <string name="server_url">http://192.168.1.139:8080</string>
-    <string name="browse_uri"></string>
+    <string name="server_url">http://pilense-production.herokuapp.com</string>
+    <string name="browse_uri">/images</string>
+    <string name="sign_in_uri">/api/users/sign_in</string>
+    <string name="sign_up_uri">/api/users</string>
+    <string name="create_image_uri">/api/images</string>
 
+    <!-- Debug and testing -->
+    <string name="auth_token">HCpqH6ucZAqZ7cuLkQpjCoVfseQAQAqbQkyMsKoEYjDiGz4EctLtiKjpfH4x</string>
+    
 </resources>

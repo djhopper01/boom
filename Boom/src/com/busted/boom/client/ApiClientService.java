@@ -98,16 +98,16 @@ public class ApiClientService extends IntentService {
 			}
 		}
 		catch ( URISyntaxException e ) {
-			
+			e.printStackTrace();
 		}
 		catch ( UnsupportedEncodingException e ) {
-			
+			e.printStackTrace();
 		}
 		catch ( ClientProtocolException e ) {
-			
+			e.printStackTrace();
 		}
 		catch ( IOException e ) {
-			
+			e.printStackTrace();
 		}
 	}
 
