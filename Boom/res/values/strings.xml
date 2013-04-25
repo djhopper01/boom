@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Boom</string>
-    <string name="app_blurb">Welcome to Boom</string>
+    <string name="app_name">PiLense</string>
+    <string name="app_blurb">Welcome to PiLense</string>
     <string name="take_picture">Take Picture</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="confirmation_close">Close</string>
     <string name="confirmation_caption">Write a Caption</string>
     <string name="confirmation_info">We\'re uploading your picture now.</string>
     <string name="refresh">Refresh</string>
+    
+    <string name="welcome_message">Capture the world around you.</string>
     
     <string name="server_url">http://pilense-production.herokuapp.com</string>
     <string name="browse_uri">/images</string>

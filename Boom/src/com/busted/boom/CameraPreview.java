@@ -1,9 +1,12 @@
 package com.busted.boom;
 
 import java.io.IOException;
+import java.util.List;
 
 import android.content.Context;
 import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.Parameters;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
@@ -29,8 +32,15 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // underlying surface is created and destroyed.
         mHolder = getHolder();
         mHolder.addCallback(this);
+        
         // deprecated setting, but required on Android versions prior to 3.0
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        
+        Parameters params = mCamera.getParameters();
+        List<Camera.Size> sizes = params.getSupportedPictureSizes();
+        Camera.Size size = sizes.get(0);
+        params.setPictureSize(size.width, size.height);
+        mCamera.setParameters(params);
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
@@ -67,26 +77,30 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // set preview size and make any resize, rotate or
         // reformatting changes here
         Display display = ( (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        
+        int degrees = 0;
+        
         switch( display.getRotation() ) {
         case Surface.ROTATION_0:
-        	mCamera.setDisplayOrientation(90);
+        	degrees = 90;
         	break;
         case Surface.ROTATION_90:
-        	mCamera.setDisplayOrientation(0);
+        	degrees = 0;
         	break;
         case Surface.ROTATION_180:
-        	mCamera.setDisplayOrientation(270);
+        	degrees = 270;
         	break;
         case Surface.ROTATION_270:
-        	mCamera.setDisplayOrientation(180);
+        	degrees = 180;
         	break;
         }
+        
+        mCamera.setDisplayOrientation(degrees);
 
         // start preview with new settings
         try {
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
-
         } catch (Exception e){
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
         }

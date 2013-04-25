@@ -13,5 +13,8 @@
     <color name="buttonEndPressed">#CCbce0ee</color>
     <color name="buttonOutline">#66999999</color>
     <color name="buttonOutlinePressed">#99999999</color>
+    <color name="blue">#00AEEC</color>
+    <color name="darkBlue">#00749E</color>
+    <color name="black">#000000</color>
 
 </resources>

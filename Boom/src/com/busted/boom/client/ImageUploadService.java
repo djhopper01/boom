@@ -18,6 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -35,6 +36,9 @@ public class ImageUploadService extends IntentService {
 	private static final String TAG = ApiClientService.class.getName();
 	
 	public static final String EXTRA_FILEPATH        = "com.busted.boom.EXTRA_FILEPATH";
+	public static final String EXTRA_LAT             = "com.busted.boom.EXTRA_LAT";
+	public static final String EXTRA_LON             = "com.busted.boom.EXTRA_LON";
+	public static final String EXTRA_ORIENTATION     = "com.busted.boom.EXTRA_ORIENTATION";
 	public static final String EXTRA_RESULT_RECEIVER = "com.busted.boom.EXTRA_RESULT_RECEIVER";
 	
 	private Bitmap mBitmap;
@@ -65,11 +69,15 @@ public class ImageUploadService extends IntentService {
 			HttpClient client = new DefaultHttpClient();
 			HttpPost request = new HttpPost();
 			request.setURI(new URI(action.toString()));
-//			request.setURI(new URI("http://requestb.in/tqwvcltr"));
+//			request.setURI(new URI("http://requestb.in/muttkqmu"));
 			
 			ByteArrayBody bab = new ByteArrayBody(data, filename);
 			MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 			entity.addPart("file", bab);
+			entity.addPart("lat", new StringBody(String.valueOf(extras.getDouble(EXTRA_LAT))));
+			entity.addPart("lon", new StringBody(String.valueOf(extras.getDouble(EXTRA_LON))));
+			entity.addPart("orientation", new StringBody(extras.getString(EXTRA_ORIENTATION)));
+			
 			request.setEntity(entity);
 			request.setHeader("Accept", "application/json");
 			

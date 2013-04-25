@@ -22,6 +22,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.location.LocationManager;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -146,10 +147,25 @@ public class CameraActivity extends Activity {
 	        	Intent intent = new Intent(activity, ImageUploadService.class);
 	        	
 	        	String authToken = getResources().getString(R.string.auth_token);
+	        	String filepath = pictureFile.getAbsolutePath();
 	        	
 	        	// This is just for testing. We'll need to use the user's auth token here.
 	        	intent.setData(Uri.parse(mCreateImageUrl + "?auth_token=" + authToken));
 	        	intent.putExtra(ImageUploadService.EXTRA_FILEPATH, pictureFile.getAbsolutePath());
+	        	intent.putExtra(ImageUploadService.EXTRA_LAT, mLocationReader.getLocation().getLatitude());
+	        	intent.putExtra(ImageUploadService.EXTRA_LON, mLocationReader.getLocation().getLongitude());
+	        	
+	        	String orientation = null;
+	        	try {
+					ExifInterface exif = new ExifInterface(filepath);
+					orientation = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	        	
+	        	if (orientation != null) {
+	        		intent.putExtra(ImageUploadService.EXTRA_ORIENTATION, orientation);
+	        	}
 	        	
 	        	Log.d(TAG, "Starting the service");
 	        	
@@ -176,7 +192,7 @@ public class CameraActivity extends Activity {
 	    // using Environment.getExternalStorageState() before doing this.
 
 	    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-	              Environment.DIRECTORY_PICTURES), "MyCameraApp");
+	              Environment.DIRECTORY_PICTURES), "PiLense");
 	    // This location works best if you want the created images to be shared
 	    // between applications and persist after your app has been uninstalled.
 
