@@ -97,15 +97,19 @@ public class MainActivity extends FragmentActivity {
 			Log.d(TAG, "Position: " + position);
 			
 			Fragment fragment = null;
+			Bundle bundle = new Bundle();
 			switch (position) {
 			case 0:
-				fragment = new DiscoverFragment();
+				fragment = new WebViewFragment();
+				bundle.putString(WebViewFragment.ARGS_URL, getString(R.string.browse_uri));
 				break;
 			case 1:
-				fragment = new ProfileFragment();
+				fragment = new WebViewFragment();
+				bundle.putString(WebViewFragment.ARGS_URL, getString(R.string.profile_uri));
 				break;
 			}
 			
+			fragment.setArguments(bundle);
 			return fragment;
 		}
 

@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-public class DiscoverFragment extends Fragment {
+public class WebViewFragment extends Fragment {
 	
 	private static final String TAG = "DiscoverFragment";
 	
-	private String mBrowseUrl;
+	public static final String ARGS_URL = "com.busted.boom.ARGS_URL";
+	
+	private String mUrl;
 	private String mHostname;
 	private WebView mBrowseView;
 
@@ -32,14 +34,11 @@ public class DiscoverFragment extends Fragment {
 				container, false);
 		
 		mHostname = getResources().getString(R.string.server_url);
-		mBrowseUrl = mHostname + getResources().getString(R.string.browse_uri);
+		mUrl = mHostname + getArguments().getString(ARGS_URL);
 		
 		mBrowseView = (WebView) rootView.findViewById(R.id.browse_web_view);
-		mBrowseView.loadUrl(mBrowseUrl);
+		mBrowseView.loadUrl(mUrl);
 		mBrowseView.getSettings().setJavaScriptEnabled(true);
-		
-//		mBrowseView.getSettings().setLoadWithOverviewMode(true);
-//		mBrowseView.getSettings().setUseWideViewPort(true);
 		
 		return rootView;
 	}
