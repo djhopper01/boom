@@ -1,56 +1,61 @@
 package com.busted.boom;
 
-import android.app.Activity;
+import java.util.Locale;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
 import android.widget.Button;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
+	
+	private static final String TAG = "MainActivity";
 	
 	private Button mButton;
-	private WebView mBrowseView;
-	private String mHostname;
-	private String mBrowseUrl;
 	private Context mContext;
+	
+	SectionsPagerAdapter mSectionsPagerAdapter;
+	ViewPager mViewPager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		mContext = this;
-		
-		mHostname = getResources().getString(R.string.server_url);
-		mBrowseUrl = mHostname + getResources().getString(R.string.browse_uri);
 
 		setContentView(R.layout.activity_main);
 		
 		mButton = (Button) findViewById(R.id.take_picture);
 		mButton.setOnClickListener(mTakePictureListener);
 		
-		mBrowseView = (WebView) findViewById(R.id.browse_web_view);
-		mBrowseView.loadUrl(mBrowseUrl);
-		mBrowseView.getSettings().setJavaScriptEnabled(true);
-//		mBrowseView.getSettings().setLoadWithOverviewMode(true);
-//		mBrowseView.getSettings().setUseWideViewPort(true);
+		mSectionsPagerAdapter = new SectionsPagerAdapter(
+				getSupportFragmentManager());
+		
+		Log.d(TAG, "Setting up view pager.");
 
+		// Set up the ViewPager with the sections adapter.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
 	}
 
 	@Override
 	protected void onPause() {
-		
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		
 		super.onResume();
 	}
 	
@@ -65,7 +70,6 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch ( item.getItemId() ) {
 			case R.id.refresh:
-				mBrowseView.reload();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -81,5 +85,46 @@ public class MainActivity extends Activity {
 		}
 		
 	};
+	
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+		public SectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			Log.d(TAG, "Position: " + position);
+			
+			Fragment fragment = null;
+			switch (position) {
+			case 0:
+				fragment = new DiscoverFragment();
+				break;
+			case 1:
+				fragment = new ProfileFragment();
+				break;
+			}
+			
+			return fragment;
+		}
+
+		@Override
+		public int getCount() {
+			return 2;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			Locale l = Locale.getDefault();
+			switch (position) {
+			case 0:
+				return getString(R.string.discover_section_title).toUpperCase(l);
+			case 1:
+				return getString(R.string.profile_section_title).toUpperCase(l);
+			}
+			return null;
+		}
+	}
 	
 }

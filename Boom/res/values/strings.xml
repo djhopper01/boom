@@ -10,15 +10,23 @@
     <string name="confirmation_info">We\'re uploading your picture now.</string>
     <string name="refresh">Refresh</string>
     
+    <string name="discover_section_title">Discover</string>
+    <string name="profile_section_title">My Profile</string>
+    
     <string name="welcome_message">Capture the world around you.</string>
     
-    <string name="server_url">http://pilense-production.herokuapp.com</string>
+    <!-- <string name="server_url">http://pilense-production.herokuapp.com</string> -->
+    <string name="server_url">http://192.168.1.139:5000</string>
     <string name="browse_uri">/images</string>
+    <string name="profile_uri">/profile</string>
     <string name="sign_in_uri">/api/users/sign_in</string>
     <string name="sign_up_uri">/api/users</string>
     <string name="create_image_uri">/api/images</string>
 
     <!-- Debug and testing -->
-    <string name="auth_token">HCpqH6ucZAqZ7cuLkQpjCoVfseQAQAqbQkyMsKoEYjDiGz4EctLtiKjpfH4x</string>
+    <!-- <string name="auth_token">HCpqH6ucZAqZ7cuLkQpjCoVfseQAQAqbQkyMsKoEYjDiGz4EctLtiKjpfH4x</string> -->
+    
+    <!-- Derek's local machine -->
+    <string name="auth_token">zmxtQUuiJgJyrzzotJJFyhz4CGG9H9LuhpBxNM6nCV6yezpsQQGaRzz8zkVp</string>
     
 </resources>
