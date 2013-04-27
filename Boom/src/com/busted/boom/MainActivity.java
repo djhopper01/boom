@@ -36,8 +36,9 @@ public class MainActivity extends Activity {
 		
 		mBrowseView = (WebView) findViewById(R.id.browse_web_view);
 		mBrowseView.loadUrl(mBrowseUrl);
-		mBrowseView.getSettings().setLoadWithOverviewMode(true);
-		mBrowseView.getSettings().setUseWideViewPort(true);
+		mBrowseView.getSettings().setJavaScriptEnabled(true);
+//		mBrowseView.getSettings().setLoadWithOverviewMode(true);
+//		mBrowseView.getSettings().setUseWideViewPort(true);
 
 	}
 
