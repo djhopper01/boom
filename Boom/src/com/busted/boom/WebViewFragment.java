@@ -1,5 +1,7 @@
 package com.busted.boom;
 
+import com.handmark.pulltorefresh.library.PullToRefreshWebView;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +19,7 @@ public class WebViewFragment extends Fragment {
 	
 	private String mUrl;
 	private String mHostname;
-	private WebView mBrowseView;
+	private PullToRefreshWebView mWebView;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -33,12 +35,14 @@ public class WebViewFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.webview_fragment,
 				container, false);
 		
+		Log.d(TAG, "web view id: " + rootView.getId() + ", " + R.id.web_view_fragment);
+		
 		mHostname = getResources().getString(R.string.server_url);
 		mUrl = mHostname + getArguments().getString(ARGS_URL);
 		
-		mBrowseView = (WebView) rootView.findViewById(R.id.browse_web_view);
-		mBrowseView.loadUrl(mUrl);
-		mBrowseView.getSettings().setJavaScriptEnabled(true);
+		mWebView = (PullToRefreshWebView) rootView.findViewById(R.id.browse_web_view);
+		mWebView.getRefreshableView().loadUrl(mUrl);
+		mWebView.getRefreshableView().getSettings().setJavaScriptEnabled(true);
 		
 		return rootView;
 	}

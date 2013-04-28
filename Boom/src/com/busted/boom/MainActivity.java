@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,6 +48,7 @@ public class MainActivity extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager.setOnPageChangeListener(mPageChangeListener);
 	}
 
 	@Override
@@ -69,8 +71,6 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch ( item.getItemId() ) {
-			case R.id.refresh:
-				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -86,7 +86,31 @@ public class MainActivity extends FragmentActivity {
 		
 	};
 	
+	private OnPageChangeListener mPageChangeListener = new OnPageChangeListener() {
+
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+			
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+			
+		}
+
+		@Override
+		public void onPageSelected(int position) {
+			
+		}
+		
+	};
+	
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+		
+		public static final int DISCOVER = 0;
+		public static final int PROFILE = 1;
+		
+		public static final int TOTAL_PAGES = 2;
 
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -99,11 +123,11 @@ public class MainActivity extends FragmentActivity {
 			Fragment fragment = null;
 			Bundle bundle = new Bundle();
 			switch (position) {
-			case 0:
+			case DISCOVER:
 				fragment = new WebViewFragment();
 				bundle.putString(WebViewFragment.ARGS_URL, getString(R.string.browse_uri));
 				break;
-			case 1:
+			case PROFILE:
 				fragment = new WebViewFragment();
 				bundle.putString(WebViewFragment.ARGS_URL, getString(R.string.profile_uri));
 				break;
@@ -115,16 +139,16 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return 2;
+			return TOTAL_PAGES;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
 			switch (position) {
-			case 0:
+			case DISCOVER:
 				return getString(R.string.discover_section_title).toUpperCase(l);
-			case 1:
+			case PROFILE:
 				return getString(R.string.profile_section_title).toUpperCase(l);
 			}
 			return null;
